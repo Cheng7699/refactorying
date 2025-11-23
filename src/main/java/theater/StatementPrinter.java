@@ -32,7 +32,7 @@ public class StatementPrinter {
         for (Performance performance : invoice.getPerformances()) {
 
             // add volume credits
-            volumeCredits += Math.max(performance.getAudience() - Constants.BASE_VOLUME_CREDIT_THRESHOLD, 0);
+            volumeCredits += getVolumeCredits(performance);
             // add extra credit for every five comedy attendees
             if ("comedy".equals(getPlay(performance).getType())) {
                 volumeCredits +=
@@ -48,6 +48,10 @@ public class StatementPrinter {
         result.append(String.format("You earned %s credits%n", volumeCredits));
         return result.toString();
         // I forgot to include task1.1 in commit msg.
+    }
+
+    private static int getVolumeCredits(Performance performance) {
+        return Math.max(performance.getAudience() - Constants.BASE_VOLUME_CREDIT_THRESHOLD, 0);
     }
 
     private Play getPlay(Performance performance) {
